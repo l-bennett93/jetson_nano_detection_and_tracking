@@ -17,9 +17,14 @@ class MipiCamera():
     def _gstStr(self, width, height):
         return 'nvarguscamerasrc ! video/x-raw(memory:NVMM), width=%d, height=%d, format=(string)NV12, framerate=(fraction)%d/1 ! nvvidconv ! video/x-raw, width=(int)%d, height=(int)%d, format=(string)BGRx ! videoconvert ! appsink' % (3280, 2464, 21, width, height)
 
+#    def startStreaming(self):
+#        print ("Starting to stream camera...")
+#        self.cap = cv2.VideoCapture(self._gstStr(self.width, self.height))
+
+    #Remove _gstStr instantiation and replace with standard video capture
     def startStreaming(self):
         print ("Starting to stream camera...")
-        self.cap = cv2.VideoCapture(self._gstStr(self.width, self.height))
+        self.cap = cv2.VideoCapture(0)
 
     def getFrame(self):
         rtn_val, frame = self.cap.read()
@@ -39,5 +44,4 @@ class MipiCamera():
         if self.cap:
             self.cap.release()
         print ("Cleanly exited MipiCamera")
-
 
